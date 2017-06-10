@@ -13,12 +13,12 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#index">EKG</a>
+            <a class="navbar-brand" href="/index">EKG</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#index">Wybierz plik</a></li>
-                <!--<li><a href="#about">About</a></li>-->
+                <li class="active"><a href="/index">Wybierz plik</a></li>
+                <li class="active"><a href="/charts">Wykres</a></li>
             </ul>
         </div>
     </div>
@@ -27,9 +27,9 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>Analiza rytmu serca na podstawie sygnału EKG</h1>
-        <h3>
-            <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"/>
+        <h1>Wyznaczanie rytmu serca na podstawie sygnału EKG</h1>
+        <p>
+            <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"></p>
         </h3>
     </div>
     <div class="ct-chart ct-perfect-fourth" style="height: 80%"></div>

@@ -22,8 +22,10 @@ public class WebController {
     private EcgService ecgService;
 
     @RequestMapping(value = "/charts", method = RequestMethod.GET)
-    public String drawChart(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
-        model.addAttribute("name", name);
+    public String drawChart(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) throws IOException {
+        EcgData ecgData = ecgService.calculate(SampleFiles.SAMPLE1.toString());
+        model.addAttribute("ecgData", ecgData);
+        JsWritter.writeDataToJsForAmCharts(ecgData);
         return "charts";
     }
 
@@ -35,11 +37,10 @@ public class WebController {
         return "index";
     }
 
-    @RequestMapping(value = "/processForm", method=RequestMethod.POST)
-    public String processForm(@ModelAttribute(value="selectedFile") SelectedFile selectedFile, Model model) throws IOException {
+    @RequestMapping(value = "/processForm", method = RequestMethod.POST)
+    public String processForm(@ModelAttribute(value = "selectedFile") SelectedFile selectedFile, Model model) throws IOException {
         EcgData ecgData = ecgService.calculate(selectedFile.getFileName());
         model.addAttribute("ecgData", ecgData);
-
         JsWritter.writeDataToJsForAmCharts(ecgData);
         return "charts";
     }

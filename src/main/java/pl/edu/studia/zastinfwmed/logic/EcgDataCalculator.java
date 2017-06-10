@@ -2,6 +2,7 @@ package pl.edu.studia.zastinfwmed.logic;
 
 import lombok.Getter;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 public class EcgDataCalculator {
     @Getter
     private EcgData ecgData;
+
+    private static DecimalFormat two_decimals = new DecimalFormat("0.00");
 
     public EcgDataCalculator(EcgData ecgData) {
         this.ecgData = ecgData;
@@ -35,7 +38,7 @@ public class EcgDataCalculator {
             ecgData.getHeartbeatRythms().add(durations.get(i).minus(previousDuration));
             previousDuration = durations.get(i);
         }
-        ecgData.setAverageHeartbeatRythm(ecgData.getHeartbeatRythms().stream().mapToLong(Duration::toMillis).average().getAsDouble() + "ms");
+        ecgData.setAverageHeartbeatRythm(two_decimals.format(ecgData.getHeartbeatRythms().stream().mapToLong(Duration::toMillis).average().getAsDouble()) + " ms");
     }
 
     public void wyznaczZalamkiR() {
