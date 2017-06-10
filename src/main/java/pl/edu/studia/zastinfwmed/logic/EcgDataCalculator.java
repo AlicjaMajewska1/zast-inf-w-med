@@ -45,16 +45,7 @@ public class EcgDataCalculator {
 
         double average = ecgData.getEcgDataSamples().stream().filter(ecgSample -> ecgSample.getDifferenceToPrevious() < 0).mapToInt(EcgDataSample::getDifferenceToPrevious).average().getAsDouble();
 
-       /* boolean containsMinToRemove = true;
-        while (containsMinToRemove) {
 
-            EcgDataSample minSample = Collections.min(ecgData.getEcgDataSamples(), Comparator.comparing(EcgDataSample::getDifferenceToPrevious));
-            if( minSample.getDifferenceToPrevious()  < average * 5){
-                minSample.setDifferenceToPrevious((int) average * 4);
-            } else {
-                containsMinToRemove = false;
-            }
-        }*/
 
         int maxDifference = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getDifferenceToPrevious).min().getAsInt();
         int aboveAverage = (int) ((maxDifference - average) / 2);

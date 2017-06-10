@@ -8,8 +8,14 @@ var chart = AmCharts.makeChart("chartdiv", {
     "valueAxes": [{
         "axisAlpha": 0.2,
         "dashLength": 1,
-        "position": "left"
+        "position": "left",
+        "title" : "Napięcie [µV]"
     }],
+    "numberFormatter": {
+        "precision": -1,
+        "decimalSeparator": ".",
+        "thousandsSeparator": ""
+    },
     "mouseWheelZoomEnabled": true,
     "graphs": [{
         "id": "g1",
@@ -34,7 +40,8 @@ var chart = AmCharts.makeChart("chartdiv", {
         "parseDates": false,
         "axisColor": "#DADADA",
         "dashLength": 1,
-        "minorGridEnabled": true
+        "minorGridEnabled": true,
+        "title": "Czas"
     },
     "export": {
         "enabled": true
