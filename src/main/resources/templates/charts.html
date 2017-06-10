@@ -5,8 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-3.3.7/bootstrap.min.css}"
           href="../static/css/bootstrap-3.3.7/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/chartist-js-master/chartist.min.css}"
-          href="../static/css/chartist-js-master/chartist.min.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../static/css/main.css"/>
 
 </head>
@@ -28,7 +26,7 @@
 
 <div class="container">
 
-    <div class="starter-template" >
+    <div class="starter-template">
         <h1>Analiza rytmu serca na podstawie sygnału EKG</h1>
         <h3>
             <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"/>
@@ -41,19 +39,15 @@
         th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap-3.3.7/bootstrap.min.js}"
         src="../static/js/bootstrap-3.3.7/bootstrap.min.js"></script>
-<script type="text/javascript" th:src="@{/js/chartist-js-master/chartist.js}"
-        src="../static/js/chartist-js-master/chartist.js"></script>
-<script type="text/javascript" src="../static/js/data.js" th:src="@{/js/data.js}"></script>
-<script type="text/javascript" src="../static/js/data2.js" th:src="@{/js/data2.js}"></script>
 <script type="text/javascript" src="../static/js/dataAmCharts.js" th:src="@{/js/dataAmCharts.js}"></script>
-<script type="text/javascript" src="../static/js/linechart.js" th:src="@{/js/linechart.js}"></script>
 
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all"/>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-<script type="text/javascript" src="../static/js/linechart2.js" th:src="@{/js/linechart2.js}"></script>
+<script type="text/javascript" src="../static/js/linechartAmChartDef.js"
+        th:src="@{/js/linechartAmChartDef.js}"></script>
 <div id="chartdiv"></div>
 </body>
 </html>

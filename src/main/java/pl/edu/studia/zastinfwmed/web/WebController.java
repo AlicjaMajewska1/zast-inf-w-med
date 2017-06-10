@@ -40,7 +40,6 @@ public class WebController {
         EcgData ecgData = ecgService.calculate(selectedFile.getFileName());
         model.addAttribute("ecgData", ecgData);
 
-        JsWritter.writeDataToJs(ecgData);
         JsWritter.writeDataToJsForAmCharts(ecgData);
         return "charts";
     }
