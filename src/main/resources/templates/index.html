@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zastos. inf. w med.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-3.3.7/bootstrap.min.css}"
+          href="../static/css/bootstrap-3.3.7/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../static/css/main.css"/>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">EKG</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Wybierz plik</a></li>
+                <!--<li><a href="#about">About</a></li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div>
+        <h1>Analiza rytmu serca na podstawie sygnału EKG</h1>
+        <h2>Wybierz plik do analizy</h2>
+        <h4>
+            <p>Wymagany schemat danych:</p>
+            <p>'Elapsed time','V1' <br/>
+                'hh:mm:ss.mmm','mV'<br/>
+                '0:00.000',-5.635<br/>
+                '0:00.003',-5.635<br/>
+                '0:00.006',-5.635<br/>
+                '0:00.008',-5.635<br/>
+                '0:00.011',-5.635</p>
+        </h4>
+    </div>
+    <form action="#" th:action="@{/processForm}" th:object="${selectedFile}" method="post">
+        <div class="row">
+            <div class="form-group ">
+                <label for="selectFileName">Wybierz plik: </label>
+                <select class="form-control " id="selectFileName" th:field="*{fileName}">
+                    <option th:each="file : ${samplefiles}"
+                            th:value="${file}"
+                            th:text="${file}">Wireframe
+                    </option>
+                </select>
+                    <button class="btn btn-success col-xs-offset-10 col-xs-2" type="submit">Wybierz</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="ct-chart ct-perfect-fourth"></div>
+</div>
+<!-- /.container -->
+<script type="text/javascript" src="../static/js/jquery/jquery-3.2.1.min.js"
+        th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap-3.3.7/bootstrap.min.js}"
+        src="../static/js/bootstrap-3.3.7/bootstrap.min.js"></script>
+</body>
+</html>
