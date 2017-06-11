@@ -45,16 +45,13 @@ public class EcgDataCalculator {
 
         double average = ecgData.getEcgDataSamples().stream().filter(ecgSample -> ecgSample.getDifferenceToPrevious() < 0).mapToInt(EcgDataSample::getDifferenceToPrevious).average().getAsDouble();
 
-
-
         int maxDifference = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getDifferenceToPrevious).min().getAsInt();
-        int aboveAverage = (int) ((maxDifference - average) / 2);
 
         int previousDifference = ecgData.getEcgDataSamples().isEmpty() ? 0 : ecgData.getEcgDataSamples().get(0).getDifferenceToPrevious();
         for (int i = 1; i < ecgData.getEcgDataSamples().size(); ++i) {
             EcgDataSample actualSample = ecgData.getEcgDataSamples().get(i);
             if (sampleGoDown(previousDifference) && sampleGoUp(actualSample.getDifferenceToPrevious()) &&
-                    (actualSample.getDifferenceToPrevious() < average) && nextFiveSamplesAreGrowingFast(average, i)) {
+                    (actualSample.getDifferenceToPrevious() < average) && nextThreeSamplesAreGrowingFast(average, i)) {
                 actualSample.setRole(EcgRole.ZALAMEK_R);
             }
             previousDifference = actualSample.getDifferenceToPrevious();
@@ -82,8 +79,8 @@ public class EcgDataCalculator {
         return differenceToPrevious > 0;
     }
 
-    private boolean nextFiveSamplesAreGrowingFast(double average, int index ){
-        for (int i = index; i < index + 5 && i <  ecgData.getEcgDataSamples().size(); i++){
+    private boolean nextThreeSamplesAreGrowingFast(double average, int index ){
+        for (int i = index; i < index + 3 && i <  ecgData.getEcgDataSamples().size(); i++){
             int actualDifference = ecgData.getEcgDataSamples().get(i).getDifferenceToPrevious();
             if (!(sampleGoUp(actualDifference) && (actualDifference < average))){
                 return false;

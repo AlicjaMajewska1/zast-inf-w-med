@@ -10,6 +10,7 @@ import pl.edu.studia.zastinfwmed.logic.SampleFiles;
 import pl.edu.studia.zastinfwmed.logic.JsWritter;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Alicja on 2017-05-27.
@@ -23,6 +24,7 @@ public class WebController {
 
     @RequestMapping(value = "/charts", method = RequestMethod.GET)
     public String drawChart(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) throws IOException {
+
         EcgData ecgData = ecgService.calculate(SampleFiles.SAMPLE1.toString());
         model.addAttribute("ecgData", ecgData);
         JsWritter.writeDataToJsForAmCharts(ecgData);
