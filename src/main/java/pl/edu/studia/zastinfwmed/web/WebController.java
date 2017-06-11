@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.studia.zastinfwmed.logic.EcgData;
-import pl.edu.studia.zastinfwmed.logic.EcgService;
-import pl.edu.studia.zastinfwmed.logic.SampleFiles;
-import pl.edu.studia.zastinfwmed.logic.JsWritter;
+import pl.edu.studia.zastinfwmed.logic.*;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.List;
 
 /**
  * Created by Alicja on 2017-05-27.
@@ -22,12 +19,13 @@ public class WebController {
     @Autowired
     private EcgService ecgService;
 
+    private EcgData ecgData;
+
     @RequestMapping(value = "/charts", method = RequestMethod.GET)
     public String drawChart(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) throws IOException {
 
         EcgData ecgData = ecgService.calculate(SampleFiles.SAMPLE1.toString());
         model.addAttribute("ecgData", ecgData);
-        JsWritter.writeDataToJsForAmCharts(ecgData);
         return "charts";
     }
 
@@ -39,11 +37,17 @@ public class WebController {
         return "index";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/loadChartData", method = RequestMethod.GET)
+    public List<CharDataSample> loadChartData(@RequestParam(value = "filename", required = true) String filename) throws IOException {
+        //EcgData ecgData = ecgService.calculate(filename);
+        return JsonWritter.writeDataToSamples(ecgData);
+    }
+
     @RequestMapping(value = "/processForm", method = RequestMethod.POST)
     public String processForm(@ModelAttribute(value = "selectedFile") SelectedFile selectedFile, Model model) throws IOException {
-        EcgData ecgData = ecgService.calculate(selectedFile.getFileName());
+        ecgData = ecgService.calculate(selectedFile.getFileName());
         model.addAttribute("ecgData", ecgData);
-        JsWritter.writeDataToJsForAmCharts(ecgData);
         return "charts";
     }
 }

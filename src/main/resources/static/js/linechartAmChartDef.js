@@ -1,3 +1,16 @@
+chartData = [];
+$.ajax({
+    url: 'http://localhost:8080/loadChartData',
+    dataType: 'json',
+    async: false,
+    data: {
+        filename: "[[${ecgData.filename}]];"
+    },
+    success: function (data) {
+        chartData = data;
+        debugger;
+    }
+});
 var chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "light",
@@ -9,7 +22,7 @@ var chart = AmCharts.makeChart("chartdiv", {
         "axisAlpha": 0.2,
         "dashLength": 1,
         "position": "left",
-        "title" : "Napięcie [µV]"
+        "title": "Napięcie [µV]"
     }],
     "numberFormatter": {
         "precision": -1,

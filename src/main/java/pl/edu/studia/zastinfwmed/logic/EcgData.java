@@ -16,8 +16,10 @@ public class EcgData {
     private List<Duration> heartbeatRythms = new ArrayList<>();
     private List<EcgDataSample> ecgDataSamples;
     private String averageHeartbeatRythmPerMinute;
+    private String filename;
 
-    public EcgData(List<EcgDataSample> ecgDataSamples) {
+    public EcgData(List<EcgDataSample> ecgDataSamples, String filename) {
+        this.filename = filename;
         this.ecgDataSamples = ecgDataSamples;
     }
 }

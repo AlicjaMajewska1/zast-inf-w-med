@@ -50,8 +50,8 @@ public class EcgDataCalculator {
     public void wyznaczZalamkiR() {
 
         double average = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getValue).average().getAsDouble();
-        int maxValue = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getValue).max().getAsInt();
-        double aboveAverage = (maxValue + average * 2) / 3;
+        int minValue = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getValue).min().getAsInt();
+        double aboveAverage = (minValue + average * 2) / 3;
 
         int previousDifference = ecgData.getEcgDataSamples().isEmpty() ? 0 : ecgData.getEcgDataSamples().get(0).getDifferenceToPrevious();
         int size = ecgData.getEcgDataSamples().size();

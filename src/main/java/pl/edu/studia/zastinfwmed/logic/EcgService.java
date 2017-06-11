@@ -20,7 +20,7 @@ public class EcgService {
         DataParser dataParser = new DataParser();
         List<EcgDataSample> integers = dataParser.parseDataFromFile(resourceFile);
 
-        final EcgData ecgData = new EcgData(integers);
+        final EcgData ecgData = new EcgData(integers, filename);
         EcgDataCalculator calculator = new EcgDataCalculator(ecgData);
         calculator.wyznaczZalamkiR();
         calculator.countRythm();
