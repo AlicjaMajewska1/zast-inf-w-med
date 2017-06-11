@@ -70,7 +70,7 @@ public class EcgDataCalculator {
     }
 
     private boolean sampleGoDown(int differenceToPrevious) {
-        return differenceToPrevious > 0;
+        return differenceToPrevious >= 0;
     }
 
 
