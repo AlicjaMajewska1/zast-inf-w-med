@@ -37,7 +37,7 @@ public class JsWritter {
                 writer.write("'");
                 writer.write(String.valueOf(String.valueOf(sample.getValue())));
                 writer.write("'");
-                if (EcgRole.ZALAMEK_R.equals(sample.getRole())) {
+                if (EcgRole.LOCAL_MAX.equals(sample.getRole())) {
                     writer.write(",");
                     writer.write("bullet: ");
                     writer.write("'round'");

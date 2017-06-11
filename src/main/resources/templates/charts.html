@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Zastos. inf. w med.</title>
-    <meta http-equiv="Cache-control" content="NO-CACHE"/>
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-3.3.7/bootstrap.min.css}"
           href="../static/css/bootstrap-3.3.7/bootstrap.min.css"/>
@@ -30,6 +33,7 @@
     <div class="starter-template">
         <h1>Wyznaczanie rytmu serca na podstawie sygnału EKG</h1>
         <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"></p>
+        <p th:text="'Średnio ' + ${ecgData.averageHeartbeatRythmPerMinute} + ' uderzeń na minutę.'"></p>
     </div>
     <div class="ct-chart ct-perfect-fourth" style="height: 80%"></div>
 </div>

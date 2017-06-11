@@ -27,7 +27,6 @@ public class DataParser {
             String[] timeAndValue = line.split(",");
             EcgDataSample sample = new EcgDataSample();
             sample.setValue(Double.valueOf(Double.parseDouble(timeAndValue[1]) * 1000).intValue());
-
             sample.setDuration(parseDuration(timeAndValue[0]));
             samples.add(sample);
         }

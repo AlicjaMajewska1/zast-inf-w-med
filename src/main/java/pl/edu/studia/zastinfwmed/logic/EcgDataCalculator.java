@@ -4,6 +4,8 @@ import lombok.Getter;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,44 +33,36 @@ public class EcgDataCalculator {
     }
 
     public void countRythm() {
-        List<Duration> durations = ecgData.getEcgDataSamples().stream().filter(sample -> EcgRole.ZALAMEK_R.equals(sample.getRole())).map(EcgDataSample::getDuration).collect(Collectors.toList());
+        List<Duration> durations = ecgData.getEcgDataSamples().stream().filter(sample -> EcgRole.LOCAL_MAX.equals(sample.getRole())).map(EcgDataSample::getDuration).collect(Collectors.toList());
         Duration previousDuration = durations.isEmpty() ? null : durations.get(0);
 
         for (int i = 1; i < durations.size(); ++i) {
             ecgData.getHeartbeatRythms().add(durations.get(i).minus(previousDuration));
             previousDuration = durations.get(i);
         }
-        ecgData.setAverageHeartbeatRythm(two_decimals.format(ecgData.getHeartbeatRythms().stream().mapToLong(Duration::toMillis).average().getAsDouble()) + " ms");
+
+        double averageDuration = ecgData.getHeartbeatRythms().stream().mapToLong(Duration::toMillis).average().getAsDouble();
+        ecgData.setAverageHeartbeatRythm(two_decimals.format(1 / averageDuration * 1000) + " Hz");
+        ecgData.setAverageHeartbeatRythmPerMinute(String.valueOf((int) (60 / averageDuration * 1000)));
+
     }
 
     public void wyznaczZalamkiR() {
 
-        double average = ecgData.getEcgDataSamples().stream().filter(ecgSample -> ecgSample.getDifferenceToPrevious() < 0).mapToInt(EcgDataSample::getDifferenceToPrevious).average().getAsDouble();
-
-        int maxDifference = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getDifferenceToPrevious).min().getAsInt();
+        double average = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getValue).average().getAsDouble();
+        int maxValue = ecgData.getEcgDataSamples().stream().mapToInt(EcgDataSample::getValue).max().getAsInt();
+        double aboveAverage = (maxValue + average * 2) / 3;
 
         int previousDifference = ecgData.getEcgDataSamples().isEmpty() ? 0 : ecgData.getEcgDataSamples().get(0).getDifferenceToPrevious();
-        for (int i = 1; i < ecgData.getEcgDataSamples().size(); ++i) {
+        int size = ecgData.getEcgDataSamples().size();
+        for (int i = 1; i < size; ++i) {
             EcgDataSample actualSample = ecgData.getEcgDataSamples().get(i);
-            if (sampleGoDown(previousDifference) && sampleGoUp(actualSample.getDifferenceToPrevious()) &&
-                    (actualSample.getDifferenceToPrevious() < average) && nextThreeSamplesAreGrowingFast(average, i)) {
-                actualSample.setRole(EcgRole.ZALAMEK_R);
+            if (sampleGoUp(previousDifference) && sampleGoDown(actualSample.getDifferenceToPrevious()) &&
+                    (actualSample.getValue() > aboveAverage)) {
+                actualSample.setRole(EcgRole.LOCAL_MAX);
             }
             previousDifference = actualSample.getDifferenceToPrevious();
         }
-
-//        ecgData.getEcgDataSamples().stream().filter(sample -> sample.getDifferenceToPrevious() < aboveAverage).forEach(dataSample -> dataSample.setRole(EcgRole.ZALAMEK_R));
-
-/*        boolean previousWasR = false;
-        boolean roleHasChanged = false;
-        for (EcgDataSample currentSample : ecgData.getEcgDataSamples()) {
-
-            if (previousWasR && EcgRole.ZALAMEK_R.equals(currentSample.getRole())) {
-                roleHasChanged = true;
-                currentSample.setRole(EcgRole.NONE);
-            }
-            previousWasR = roleHasChanged || EcgRole.ZALAMEK_R.equals(currentSample.getRole());
-        }*/
     }
 
     private boolean sampleGoUp(int differenceToPrevious) {
@@ -79,14 +73,5 @@ public class EcgDataCalculator {
         return differenceToPrevious > 0;
     }
 
-    private boolean nextThreeSamplesAreGrowingFast(double average, int index ){
-        for (int i = index; i < index + 3 && i <  ecgData.getEcgDataSamples().size(); i++){
-            int actualDifference = ecgData.getEcgDataSamples().get(i).getDifferenceToPrevious();
-            if (!(sampleGoUp(actualDifference) && (actualDifference < average))){
-                return false;
-            }
-        }
-        return true;
-    }
 
 }
