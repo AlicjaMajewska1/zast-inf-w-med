@@ -57,8 +57,8 @@ public class EcgDataCalculator {
         int size = ecgData.getEcgDataSamples().size();
         for (int i = 1; i < size; ++i) {
             EcgDataSample actualSample = ecgData.getEcgDataSamples().get(i);
-            if (sampleGoUp(previousDifference) && sampleGoDown(actualSample.getDifferenceToPrevious()) &&
-                    (actualSample.getValue() > aboveAverage)) {
+            if (sampleGoDown(previousDifference) && sampleGoUp(actualSample.getDifferenceToPrevious()) &&
+                    (actualSample.getValue() < aboveAverage)) {
                 actualSample.setRole(EcgRole.LOCAL_MAX);
             }
             previousDifference = actualSample.getDifferenceToPrevious();
