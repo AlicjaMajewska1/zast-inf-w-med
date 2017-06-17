@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import pl.edu.studia.zastinfwmed.web.StorageProperties;
 import pl.edu.studia.zastinfwmed.web.StorageService;
 
-//@EnableWebMvc
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan({"pl.edu.studia.zastinfwmed"})
