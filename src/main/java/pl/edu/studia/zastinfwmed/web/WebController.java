@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -111,10 +112,15 @@ public class WebController {
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
-        if (file != null) {
-            storageService.store(file);
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded " + file.getOriginalFilename() + "!");
+        if (file != null && (!file.isEmpty() && !file.getName().isEmpty())) {
+            if (storageService.loadAll().filter(path -> !path.getFileName().equals(file.getOriginalFilename())).collect(Collectors.toList()).isEmpty()) {
+                storageService.store(file);
+                redirectAttributes.addFlashAttribute("message",
+                        "Dodano plik " + file.getOriginalFilename() + "!");
+            } else {
+                redirectAttributes.addFlashAttribute("message",
+                        "Plik o podanej nazwie " + file.getOriginalFilename() + " został już dodany.");
+            }
         }
         return "redirect:/index";
     }

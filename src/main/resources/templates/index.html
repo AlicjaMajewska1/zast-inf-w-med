@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-3.3.7/bootstrap.min.css}"
           href="../static/css/bootstrap-3.3.7/bootstrap.min.css"/>
+
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../static/css/main.css"/>
 
 </head>
@@ -51,36 +52,35 @@
                     </option>
                 </select>
 
-
+                <div class="spacer10"></div>
                 <button class="btn btn-success col-xs-offset-10 col-xs-2" type="submit">Wybierz</button>
             </div>
         </div>
 
     </form>
 
-
-    <div th:if="${message}">
-        <h2 th:text="${message}"/>
+    <div class="row" th:if="${message}">
+        <h3 th:text="${message}"/>
     </div>
 
-    <div>
+    <div class="spacer20"></div>
+    <div class="row">
         <form method="POST" enctype="multipart/form-data" action="/">
-            <table>
-                <tr>
-                    <td>File to upload:</td>
-                    <td><input type="file" name="file"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Upload"/></td>
-                </tr>
-            </table>
+
+            <div class="btn-group bootstrap-filestyle" role="group" aria-label="Basic example">
+                <input accept=".csv" type="file" name="file" class="filestyle" data-icon="false" data-buttonText="Wybierz plik"
+                       data-placeholder="Brak pliku"/>
+                <div class="spacer10"></div>
+                <button class="btn btn-success col-xs-offset-10 col-xs-2" type="submit">Dodaj</button>
+            </div>
+
         </form>
     </div>
+    <div class="spacer20"></div>
 
-    <div>
-        <ul>
-            <li th:each="file : ${files}">
+    <div class="row mt-1">
+        <ul class="list-group">
+            <li class="list-group-item" th:each="file : ${files}">
                 <a th:href="${file}" th:text="${file}"/>
             </li>
         </ul>
@@ -92,5 +92,7 @@
         th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap-3.3.7/bootstrap.min.js}"
         src="../static/js/bootstrap-3.3.7/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{js/bootstrap-filestyle.min.js}"
+        src="../static/js/bootstrap-filestyle.min.js"></script>
 </body>
 </html>
