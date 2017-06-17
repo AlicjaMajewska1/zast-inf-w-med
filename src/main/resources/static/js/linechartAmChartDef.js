@@ -62,11 +62,5 @@ var chart = AmCharts.makeChart("chartdiv", {
 });
 
 chart.addListener("rendered", zoomChart);
-zoomChart();
 
-// this method is called when chart is first inited as we listen for "rendered" event
-function zoomChart() {
-    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-    chart.zoomToIndexes(chartData.length - 540, chartData.length - 1);
-}
 
