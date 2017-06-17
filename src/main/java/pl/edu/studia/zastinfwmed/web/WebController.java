@@ -46,6 +46,11 @@ public class WebController {
         return "charts";
     }
 
+    @RequestMapping(value = "/documentation", method = RequestMethod.GET)
+    public String showDocumentation(Model model) throws IOException {
+        return "documentation";
+    }
+
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String showCommonInfo(Model model) {
