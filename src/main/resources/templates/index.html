@@ -44,19 +44,48 @@
         <div class="row">
             <div class="form-group ">
                 <label for="selectFileName">Wybierz plik: </label>
-                <select class="form-control " id="selectFileName" th:field="*{fileName}">
+                <select class="form-control" id="selectFileName" th:field="${selectedFile.dataFile.id}">
                     <option th:each="file : ${samplefiles}"
-                            th:value="${file}"
-                            th:text="${file}">Wireframe
+                            th:value="${file.id}"
+                            th:text="${file.name}">Wireframe
                     </option>
                 </select>
-                    <button class="btn btn-success col-xs-offset-10 col-xs-2" type="submit">Wybierz</button>
+
+
+                <button class="btn btn-success col-xs-offset-10 col-xs-2" type="submit">Wybierz</button>
             </div>
         </div>
 
     </form>
 
-    <div class="ct-chart ct-perfect-fourth"></div>
+
+    <div th:if="${message}">
+        <h2 th:text="${message}"/>
+    </div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data" action="/">
+            <table>
+                <tr>
+                    <td>File to upload:</td>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Upload"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <ul>
+            <li th:each="file : ${files}">
+                <a th:href="${file}" th:text="${file}"/>
+            </li>
+        </ul>
+    </div>
+
 </div>
 <!-- /.container -->
 <script type="text/javascript" src="../static/js/jquery/jquery-3.2.1.min.js"

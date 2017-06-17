@@ -1,5 +1,7 @@
 package pl.edu.studia.zastinfwmed.logic;
 
+import pl.edu.studia.zastinfwmed.web.DataFile;
+
 import java.io.File;
 
 /**
@@ -7,8 +9,12 @@ import java.io.File;
  */
 public class FileLoader {
 
-    public File loadFileFromResources(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource(fileName).getFile());
+    public File loadFileFromResources(DataFile dataFile) {
+        if (dataFile.isResources()) {
+            ClassLoader classLoader = getClass().getClassLoader();
+            return new File(classLoader.getResource(dataFile.getName()).getFile());
+        } else {
+            return new File(dataFile.getAbsolutePath());
+        }
     }
 }

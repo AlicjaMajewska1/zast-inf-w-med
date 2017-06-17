@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 public class SelectedFile {
 
-    private String fileName = "samples.csv";
+    private DataFile dataFile;
 }
