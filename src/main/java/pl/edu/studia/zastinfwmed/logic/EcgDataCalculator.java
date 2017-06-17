@@ -4,8 +4,6 @@ import lombok.Getter;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +41,9 @@ public class EcgDataCalculator {
 
         double averageDuration = ecgData.getHeartbeatRythms().stream().mapToLong(Duration::toMillis).average().getAsDouble();
         ecgData.setAverageHeartbeatRythm(two_decimals.format(1 / averageDuration * 1000) + " Hz");
-        ecgData.setAverageHeartbeatRythmPerMinute(String.valueOf((int) (60 / averageDuration * 1000)));
+        final int averageHeartbeatRythmPerMinute = (int) (60 / averageDuration * 1000);
+        ecgData.setAverageHeartbeatRythmPerMinute(String.valueOf(averageHeartbeatRythmPerMinute));
+        ecgData.setHeartbeatRythmCorrect(averageHeartbeatRythmPerMinute > 60 && averageHeartbeatRythmPerMinute < 80);
 
     }
 

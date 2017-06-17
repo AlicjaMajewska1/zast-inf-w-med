@@ -32,10 +32,32 @@
 
     <div class="starter-template">
         <h1>Wyznaczanie rytmu serca na podstawie sygnału EKG</h1>
-        <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"></p>
-        <p th:text="'Średnio ' + ${ecgData.averageHeartbeatRythmPerMinute} + ' uderzeń na minutę.'"></p>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="alert alert-info">
+                    <p th:text="'Średni rytm serca: ' + ${ecgData.averageHeartbeatRythm} + '.'"></p>
+                    <p th:text="'Średnio ' + ${ecgData.averageHeartbeatRythmPerMinute} + ' uderzeń na minutę.'"></p>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="alert alert-success" th:if="${ecgData.heartbeatRythmCorrect}">
+                    <p><strong>Brawo!</strong></p>
+                    <p>Wynik analizy mieści się w normie, która wynosi od 60 do 80 uderzeń na minutę, częstotliwość 1.00
+                        Hz
+                        - 1.33 Hz.</p>
+                </div>
+
+                <div class="alert alert-danger" th:if="${!ecgData.heartbeatRythmCorrect}">
+                    <p><strong>Uwaga!</strong> </p>
+                    <p>Wynik analizy nie mieści się w normie, która wynosi od 60 do 80
+                        uderzeń na minutę, częstotliwość 1.00 Hz - 1.33 Hz.</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="ct-chart ct-perfect-fourth" style="height: 80%"></div>
+    <div class="ct-chart ct-perfect-fourth" style="height: 70%"></div>
 </div>
 <!-- /.container -->
 <script type="text/javascript" src="../static/js/jquery/jquery-3.2.1.min.js"

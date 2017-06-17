@@ -39,13 +39,13 @@ public class WebController {
 
     private EcgData ecgData;
 
-    @RequestMapping(value = "/charts", method = RequestMethod.GET)
+ /*   @RequestMapping(value = "/charts", method = RequestMethod.GET)
     public String drawChart(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) throws IOException {
 
         EcgData ecgData = ecgService.calculate(new DataFile(1, SampleFiles.SAMPLE1.name()));
         model.addAttribute("ecgData", ecgData);
         return "charts";
-    }
+    }*/
 
     @RequestMapping(value = "/documentation", method = RequestMethod.GET)
     public String showDocumentation(Model model) throws IOException {

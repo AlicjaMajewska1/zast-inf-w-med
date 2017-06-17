@@ -13,6 +13,7 @@ import java.util.List;
 public class EcgData {
 
     private String averageHeartbeatRythm;
+    private boolean heartbeatRythmCorrect;
     private List<Duration> heartbeatRythms = new ArrayList<>();
     private List<EcgDataSample> ecgDataSamples;
     private String averageHeartbeatRythmPerMinute;
