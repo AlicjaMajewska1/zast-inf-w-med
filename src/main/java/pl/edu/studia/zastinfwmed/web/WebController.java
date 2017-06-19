@@ -113,14 +113,9 @@ public class WebController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
         if (file != null && (!file.isEmpty() && !file.getName().isEmpty())) {
-            if (storageService.loadAll().filter(path -> !path.getFileName().equals(file.getOriginalFilename())).collect(Collectors.toList()).isEmpty()) {
-                storageService.store(file);
-                redirectAttributes.addFlashAttribute("message",
-                        "Dodano plik " + file.getOriginalFilename() + "!");
-            } else {
-                redirectAttributes.addFlashAttribute("message",
-                        "Plik o podanej nazwie " + file.getOriginalFilename() + " został już dodany.");
-            }
+            storageService.store(file);
+            redirectAttributes.addFlashAttribute("message",
+                    "Dodano plik " + file.getOriginalFilename() + "!");
         }
         return "redirect:/index";
     }
